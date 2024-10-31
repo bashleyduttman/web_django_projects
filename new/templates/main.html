@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aesthetic Blog Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #2c3e50;
+            --bg-color: #ecf0f1;
+            --post-bg-color: #ffffff;
+            --accent-color: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--secondary-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--secondary-color);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            list-style-type: none;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .search-form {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-form input[type="text"] {
+            padding: 8px;
+            border-radius: 5px 0 0 5px;
+            border: none;
+            width: 200px;
+        }
+
+        .search-form input[type="submit"] {
+            padding: 8px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-form input[type="submit"]:hover {
+            background-color: #3498db;
+        }
+
+        main {
+            padding: 40px 0;
+        }
+
+        .blog-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .post {
+            background-color: var(--post-bg-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .post-content {
+            padding: 20px;
+        }
+
+        .blog-user {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .blog-user a {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .blog-user-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .post-title {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .post-text {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .post-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            color: #666;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .post-actions button:hover {
+            color: var(--primary-color);
+        }
+
+        .post-actions button img {
+            width: 20px;
+            margin-right: 5px;
+        }
+
+        .comments-section {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .comments-section textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        .comment-submit {
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .comment-submit:hover {
+            background-color: #3498db;
+        }
+
+        .follow-btn, .unfollow-btn, .message-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .follow-btn, .message-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .follow-btn:hover, .message-btn:hover {
+            background-color: #3498db;
+        }
+
+        .unfollow-btn {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .unfollow-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .recent-posts {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .recent-posts h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .chat-room-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .chat-room-link:hover {
+            background-color: #3498db;
+        }
+
+        @media (max-width: 768px) {
+            .blog-posts {
+                grid-template-columns: 1fr;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            nav ul li {
+                margin-bottom: 10px;
+            }
+
+            .search-form {
+                width: 100%;
+            }
+
+            .search-form input[type="text"] {
+                width: 100%;
+            }
+
+            .blog-user {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .blog-user-actions {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <ul>
+                    <li>
+                        <form class="search-form" method="GET" action="{% url 'search' %}">
+                            <input type="text" name="q" placeholder="Search" autocomplete="off" />
+                            <input type="submit" value="Go" />
+                        </form>
+                    </li>
+                    <li><a href="#">Home</a></li>
+                    {% if not request.user.is_authenticated %}
+                    <li><a href="{% url 'login-user' %}">Login</a></li>
+                    {% else %}
+                    <li><a href="{% url 'logout-user' %}">Logout</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="blog-posts">
+                {% for blog in blogss %}
+                <article class="post">
+                    <div class="post-content">
+                        <div class="blog-user">
+                            <a href="{% url 'profile' blog.user_id %}">{{ blog.name }}</a>
+                            <div class="blog-user-actions">
+                                {% if request.user != blog.user %}
+                                    {% if blog.user_id in user %}
+                                    <form action="{% url 'followers_increament' blog.user_id %}" method="post">
+                                        {% csrf_token %}
+                                        <button class="unfollow-btn" type="submit">Unfollow</button>
+                                    </form>
+                                    {% else %}
+                                    <form action="{% url 'followers_increament' blog.user_id %}" method="post">
+                                        {% csrf_token %}
+                                        <button class="follow-btn" type="submit">Follow</button>
+                                    </form>
+                                    {% endif %}
+                                    <form action="{% url 'chat_room' blog.user_id %}" method="post">
+                                        {% csrf_token %}
+                                        <button class="message-btn" type="submit">Message</button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <h2 class="post-title">{{ blog.title }}</h2>
+                        <p class="post-text">{{ blog.content }}</p>
+                        <div class="post-actions">
+                            <button class="comment-btn" onclick="toggleComments('comment-box-{{ blog.id }}')">
+                                <img src="\new\templates\static\images\comment.png" alt="Comment" />
+                                Comment
+                            </button>
+                            <button class="like-btn" onclick="toggleLike(this, {{ blog.id }})">
+                                <img src="\new\templates\static\images\like.jpg" alt="Like" />
+                                <span class="like-text">Like</span>
+                            </button>
+                        </div>
+                        <div class="comments-section" id="comment-box-{{ blog.id }}">
+                            <textarea placeholder="Add a comment..." name="comment"></textarea>
+                            <button class="comment-submit" onclick="postComment({{ blog.id }})">Post Comment</button>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </section>
+
+            <section class="recent-posts">
+                <h2>Recent Posts</h2>
+                {% for blog in blog_title %}
+                <p>{{ blog.title }}</p>
+                {% endfor %}
+                <a href="{% url 'chat_room_list' %}" class="chat-room-link">Chat Room</a>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        function toggleComments(id) {
+            const commentBox = document.getElementById(id);
+            commentBox.style.display = commentBox.style.display === "none" ? "block" : "none";
+        }
+
+        function toggleLike(button, blogId) {
+            const likeText = button.querySelector('.like-text');
+            if (likeText.textContent === 'Like') {
+                likeText.textContent = 'Liked';
+                button.style.color = '#e74c3c';
+            } else {
+                likeText.textContent = 'Like';
+                button.style.color = '#666';
+            }
+            // Here you would typically send an AJAX request to update the like status on the server
+            console.log(`Toggle like for blog ID: ${blogId}`);
+        }
+
+        function postComment(blogId) {
+            const commentBox = document.getElementById(`comment-box-${blogId}`);
+            const commentText = commentBox.querySelector('textarea').value;
+            if (commentText.trim() !== '') {
+                // Here you would typically send an AJAX request to post the comment to the server
+                console.log(`Posted comment for blog ID ${blogId}: ${commentText}`);
+                commentBox.querySelector('textarea').value = '';
+                alert('Comment posted successfully!');
+            } else {
+                alert('Please enter a comment before posting.');
+            }
+        }
+    </script>
+</body>
+</html>

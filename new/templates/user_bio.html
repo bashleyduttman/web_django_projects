@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Profile Photo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h1 {
+            color: #333333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .form-group label {
+            font-weight: bold;
+            color: #555555;
+            margin-bottom: 5px;
+            display: block;
+            text-align: left;
+        }
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .current-photo {
+            margin-top: 20px;
+        }
+        .current-photo img {
+            max-width: 150px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Update Your Profile Photo</h1>
+
+        <!-- Profile Photo Form -->
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_profile_photo">Upload New Profile Photo:</label>
+                <input type="file" name="profile_photo" id="id_profile_photo">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Update Profile</button>
+        </form>
+
+        <!-- Display Current Profile Photo (Optional) -->
+        {% if user.userprofile.profile_photo %}
+            <div class="current-photo">
+                <h2>Current Profile Photo:</h2>
+                <img src="{{ user.userprofile.profile_photo.url }}" alt="Profile Photo">
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>

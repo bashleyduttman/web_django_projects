@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Room</title>
+    <style>
+      body {
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .chat-container {
+        width: 100%;
+        max-width: 450px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        height: 80vh;
+        overflow: hidden;
+      }
+
+      .chat-header {
+        background-color: #0084ff;
+        color: white;
+        padding: 15px;
+        font-size: 18px;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .message-list {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        background-color: #f7f7f7;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .message {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: flex-end;
+      }
+
+      .message p {
+        background-color: #0084ff;
+        color: white;
+        padding: 10px;
+        border-radius: 20px;
+        max-width: 70%;
+      }
+
+      .message.sent p {
+        background-color: #e0e0e0;
+        color: black;
+        align-self: flex-end;
+      }
+
+      .timestamp {
+        font-size: 12px;
+        margin-top: 3px;
+        color: #666;
+        text-align: right;
+      }
+
+      .chat-input {
+        background-color: #fff;
+        padding: 15px;
+        border-top: 1px solid #ddd;
+        display: flex;
+        align-items: center;
+      }
+
+      .chat-input textarea {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 20px;
+        resize: none;
+        background-color: #f0f0f0;
+        font-size: 14px;
+        outline: none;
+      }
+
+      .chat-input button {
+        background-color: #0084ff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        margin-left: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      .chat-input button:hover {
+        background-color: #005bb5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chat-container">
+      <!-- Chat Header -->
+      <div class="chat-header">
+        Chat Room
+      </div>
+
+      <!-- Messages -->
+      <div class="message-list">
+        {% for message in messages %}
+          <div class="message">
+            {% if message.user == request.user %}
+           <p>{{ message.context }}</p>
+            <small class="timestamp">{{ message.timestamp }}</small>
+          {% else %}
+           <p>{{ message.context }}</p>
+            <small class="timestamp">{{ message.timestamp }}</small>
+          {% endif %}">
+
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Input Box -->
+      <form method="post">
+        {% csrf_token %}
+        <div class="chat-input">
+          <textarea name="message" placeholder="Type your message here..." rows="1"></textarea>
+          <button type="submit">&#10148;</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

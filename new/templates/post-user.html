@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a Message</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh;">
+
+    <div style="background-color: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 20px; max-width: 500px; width: 100%;">
+        <h1 style="text-align: center; color: #333;">Post a Message</h1>
+        <form  method="post" style="display: flex; flex-direction: column; gap: 15px;">
+            {% csrf_token %}
+            <label for="title" style="font-size: 1.2em; color: #555;">Title:</label>
+            <input type="text" id="title" name="title" placeholder="Enter the title here" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em;">
+
+            <label for="message" style="font-size: 1.2em; color: #555;">Message:</label>
+            <textarea id="message" name="message" rows="5" placeholder="Enter your message here" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em;"></textarea>
+
+            <button type="submit" style="background-color: #007bff; color: #fff; border: none; padding: 15px; border-radius: 4px; font-size: 1.2em; cursor: pointer; transition: background-color 0.3s;">
+                Post Message
+            </button>
+        </form>
+    </div>
+
+</body>
+</html>
